@@ -14,18 +14,21 @@ use http\Env\Response;
 class AuthController extends Controller
 {
     public function signup(SignupRequest $request)
-    {
-        $data = $request->validated();
-        /** @var \App\Models\User $user */
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+{
+    $data = $request->validated();
 
-        $token = $user->createToken('main')->plainTextToken;
-        return response(compact('user', 'token'));
-    }
+    /** @var \App\Models\User $user */
+    $user = User::create([
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'password' => bcrypt($data['password']),
+    ]);
+
+    $tokenResult = $user->createToken('Laravel');
+    $token = $tokenResult->accessToken; // Use accessToken for Passport
+    return response()->json(compact('user', 'token'));
+}
+
 
     public function login(LoginRequest $request)
     {
