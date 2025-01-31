@@ -6,6 +6,7 @@ import GuestLayout from "./components/guestlayout";
 import UserLayout from "./components/userlayout";
 import Users from "./views/users";
 import { Navigate } from "react-router-dom";
+import UserForm from "./views/UserForm";
 const router = createBrowserRouter([
     {
     path: '/',
@@ -22,6 +23,14 @@ const router = createBrowserRouter([
       {
         path: '/users',
         element: <Users/>,
+      },
+      {
+        path: '/users/new',
+        element: <UserForm key="userCreate"/>,
+      },
+      {
+        path: '/users/:id',
+        element: <UserForm key="userUpdate"/>,
       }
     ]
   },

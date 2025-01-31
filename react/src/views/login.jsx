@@ -8,28 +8,30 @@ export default function login(){
     const passwordRef = useRef();
     const [errors, setErrors]=useState(null)
     const {setUser, setToken} = useStateContext()
-    const onSubmit=(ev)=>{
-        ev.preventDefault()
-
-        const payload ={
+    const onSubmit = (ev) => {
+        ev.preventDefault();
+    
+        const payload = {
             email: emailRef.current.value,
             password: passwordRef.current.value,
-        }
-        
-        axiosClient.post("/login", payload).then(({data}) => {
-                setUser(data.user)
-                setToken(data.token)
+        };
+    
+        axiosClient.post("/login", payload)
+            .then(({ data }) => {
+                setUser(data.user);
+                setToken(data.token);
+                localStorage.setItem('USER_DATA', JSON.stringify(data.user)); // Store user data as well
             })
-            .catch(err=>{
-                const response =err.response;
-                if (response && response.status == 422){ //validation error
+            .catch(err => {
+                const response = err.response;
+                if (response && response.status === 422) { // validation error
                     setErrors(response.data.errors);
                 }
             })
             .catch(e => {
                 console.log(e);
             });
-    }
+    };
     return(
         <div className="form">
             <form onSubmit={onSubmit}>

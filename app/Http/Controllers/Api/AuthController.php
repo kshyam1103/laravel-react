@@ -41,7 +41,7 @@ class AuthController extends Controller
 
         /** @var \App\Models\User $user */
         $user = Auth::user();
-        $token = $user->createToken('main')->plainTextToken;
+        $token = $user->createToken('main')->accessToken;
         return response(compact('user', 'token'));
     }
 
@@ -52,4 +52,5 @@ class AuthController extends Controller
         $user->currentAccessToken()->delete();
         return response('', 204);
     }
+    
 }

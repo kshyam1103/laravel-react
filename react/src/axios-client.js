@@ -5,7 +5,11 @@ const axiosClient = axios.create({
 
   axiosClient.interceptors.request.use((config) => {
     const token = localStorage.getItem('ACCESS_TOKEN');
-    config.headers.Authorization = `Bearer ${token}`
+    if (token){
+    config.headers.Authorization = `Bearer ${token}`;}
+    else{
+      console.warn('No ACCESS_TOKEN found in localStorage');    
+    }
     return config;
   });
 
