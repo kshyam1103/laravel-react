@@ -1,7 +1,7 @@
 export default function userdashboard(){
     return(
         <div>
-            dashboard
+            <h1>You're Logged in!</h1>
         </div>
     )
 }

@@ -33,18 +33,19 @@ export default function login(){
             });
     };
     return(
+        <div className="login-signup-form animated fadeInDown">
         <div className="form">
             <form onSubmit={onSubmit}>
+            <h1 className="title">Login into your account</h1>
             {errors && <div className="alert">{Object.keys(errors).map(key => (<p key={key}>{errors[key][0]}</p>))}</div>}
 
                 <input ref={emailRef} type="email" placeholder="Email" />
                 <input ref={passwordRef} type="password" placeholder="password"/>
-                <button>Login</button>
-                <p>
-                    not registered?
-                    <Link to='/signup'>create an account</Link>
-                </p>
+                <button className="btn btn-block">Login</button>
+                <p className="message">Not registered? <Link to="/signup">Create an account</Link></p>
+                <p className="message"> <Link to="/forgot-password">Forgot Password</Link></p>
             </form>
+        </div>
         </div>
     )
 }

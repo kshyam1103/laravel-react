@@ -38,8 +38,10 @@ export default function signup() {
             })
     };
     return (
+        <div className="login-signup-form animated fadeInDown">
         <div className="form">
             <form onSubmit={onSubmit}>
+            <h1 className="title">Signup for Free</h1>
                 {errors && (
                     <div className="alert">
                         {Object.keys(errors).map((key) => (
@@ -52,12 +54,10 @@ export default function signup() {
                 <input ref={emailRef} type="email" placeholder="Email" />
                 <input ref={passwordRef} type="password" placeholder="password" />
                 <input ref={confirmpasswordRef} type="password" placeholder="Confirm password" />
-                <button>Signup</button>
-                <p>
-                    already registered?
-                    <Link to="/login">Sign in</Link>
-                </p>
+                <button className="btn btn-block">Signup</button>
+                <p className="message">Already registered? <Link to="/login">Sign In</Link></p>
             </form>
+        </div>
         </div>
     );
 }

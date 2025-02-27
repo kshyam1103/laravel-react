@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlite'),
+    'default' => env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -62,6 +62,24 @@ return [
             ]) : [],
         ],
 
+        // Tenant Database Configuration
+//    'connections' => [
+//     'tenant' => [
+//         'driver' => 'mysql',
+//         'host' => env('TENANT_DB_HOST', '127.0.0.1'),
+//         'port' => env('TENANT_DB_PORT', '3306'),
+//         'database' => null, // Tenancy will set this dynamically
+//         'username' => env('TENANT_DB_USERNAME', 'root'),
+//         'password' => env('TENANT_DB_PASSWORD', ''),
+//         'charset' => 'utf8mb4',
+//         'collation' => 'utf8mb4_unicode_ci',
+//         'prefix' => '',
+//         'strict' => true,
+//         'engine' => null,
+//     ],
+// ],
+
+
         'mariadb' => [
             'driver' => 'mariadb',
             'url' => env('DB_URL'),
@@ -100,7 +118,7 @@ return [
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DB_URL'),
-            'host' => env('DB_HOST', 'localhost'),
+            'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '1433'),
             'database' => env('DB_DATABASE', 'laravel'),
             'username' => env('DB_USERNAME', 'root'),

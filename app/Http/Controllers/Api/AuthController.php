@@ -5,52 +5,62 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignupRequest;
 use App\Models\User;
-use http\Env\Response;
-
+use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
-    public function signup(SignupRequest $request)
-{
-    $data = $request->validated();
+    public function signup(SignupRequest $request): JsonResponse
+    {
+        $data = $request->validated();
 
-    /** @var \App\Models\User $user */
-    $user = User::create([
-        'name' => $data['name'],
-        'email' => $data['email'],
-        'password' => bcrypt($data['password']),
-    ]);
+        /** @var User $user */
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']), // Using Laravel's Hash facade
+        ]);
 
-    $tokenResult = $user->createToken('Laravel');
-    $token = $tokenResult->accessToken; // Use accessToken for Passport
-    return response()->json(compact('user', 'token'));
-}
+        $tokenResult = $user->createToken('Laravel');
+        $token = $tokenResult->accessToken; // Use accessToken for Passport
 
+        return response()->json([
+            'user' => $user,
+            'token' => $token
+        ]);
+    }
 
-    public function login(LoginRequest $request)
+    public function login(LoginRequest $request): JsonResponse
     {
         $credentials = $request->validated();
+        
         if (!Auth::attempt($credentials)) {
-            return response([
+            return response()->json([
                 'message' => 'Provided email or password is incorrect'
             ], 422);
         }
 
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = Auth::user();
         $token = $user->createToken('main')->accessToken;
-        return response(compact('user', 'token'));
+
+        return response()->json([
+            'user' => $user,
+            'token' => $token
+        ]);
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request): JsonResponse
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
-        $user->currentAccessToken()->delete();
-        return response('', 204);
+        $user->tokens()->delete();
+
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ], 204);
     }
-    
 }

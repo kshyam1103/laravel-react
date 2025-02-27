@@ -8,9 +8,9 @@ export default function GuestLayout(){
     }
 
     return(
-        <div>
-            <Outlet/> 
-        </div>
+        <div id="guestLayout">
+      <Outlet />
+    </div>
     )
 }
 //outlet renders the children

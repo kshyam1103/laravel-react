@@ -1,0 +1,8 @@
+node_modules
+vendor
+storage
+.env
+.ddev
+.git
+Dockerfile
+docker-compose.yml

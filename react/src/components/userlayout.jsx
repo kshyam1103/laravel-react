@@ -4,7 +4,7 @@ import { useStateContext } from "../contexts/contextprovider";
 import axiosClient from "../axios-client";
 
 export default function UserLayout() {
-    const { user, token, setUser, setToken } = useStateContext();
+    const { user, token, setUser, setToken, notification } = useStateContext();
     const [loading, setLoading] = useState(true);  
 
  useEffect(() => {
@@ -34,22 +34,28 @@ export default function UserLayout() {
     };
 
     return (
-        <div id="userlayout">
+        <div id="defaultLayout">
             <aside>
                 <Link to="/userdashboard">dashboard</Link>
                 <Link to="/users">users</Link>
+                <Link to="/tenants">Tenants</Link>
             </aside>
             <div className="content">
                 <header>
-                    <div>header</div>
+                    <div> User Authentication System </div>
                     <div>
                         {user?.name}
-                        <a href="#" onClick={onLogout} className="logoutbtn">log out</a>
+                        <a href="#" onClick={onLogout} className="btn-logout">log out</a>
                     </div>
                 </header>
                 <main>
                     <Outlet />
                 </main>
+                {notification &&
+          <div className="notification">
+            {notification}
+          </div>
+        }
             </div>
         </div>
     );
